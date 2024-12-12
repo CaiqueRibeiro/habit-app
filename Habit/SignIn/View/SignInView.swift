@@ -22,7 +22,7 @@ struct SignInView: View {
             if case SignInUIState.goToHomeScreen = viewModel.uiState {
                 viewModel.homeView()
             } else {
-                NavigationView { // necessary for navigation from one view to another
+                NavigationView { // necessary for navigation from one view to another without changing the reference (pile views)
                     ScrollView(showsIndicators: false) {
                         
                         VStack(alignment: .center, spacing: 20) { // just to make scroll design better

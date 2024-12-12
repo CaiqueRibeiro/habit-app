@@ -9,12 +9,16 @@ import SwiftUI
 
 struct SignUpView: View {
     
+    @ObservedObject var viewModel: SignUpViewModel
+    
     @State var fullName: String = ""
     @State var email: String = ""
     @State var password: String = ""
     @State var document: String = ""
     @State var phone: String = ""
     @State var birthDay: String = ""
+    @State var gender: Gender = Gender.male
+    
     
     var body: some View {
         ZStack {
@@ -35,12 +39,27 @@ struct SignUpView: View {
                         documentField
                         phoneField
                         birthDayField
+                        genderField
+                        enterButton
                     }
                     
                     Spacer()
                     
                 }
                 .padding(.horizontal, 8)
+                
+                if case SignInUIState.error(let value) = viewModel.uiState {
+                    Text("")
+                        .alert(isPresented: .constant(true)) {
+                            Alert(
+                                title: Text("Habit"),
+                                message: Text(value),
+                                dismissButton: .default(Text("OK")) {
+                                    /* do something when clicks */
+                                }
+                            )
+                        }
+                }
                 
             }
             .padding(20)
@@ -93,8 +112,23 @@ extension SignUpView {
 }
 
 extension SignUpView {
+    var genderField: some View {
+        Picker("Gender", selection: $gender) {
+            ForEach(Gender.allCases, id: \.self) { value in
+                Text(value.rawValue)
+                    .tag(value)
+            }
+        }
+        .pickerStyle(SegmentedPickerStyle())
+        .padding(.top, 16)
+        .padding(.bottom, 32)
+    }
+}
+
+extension SignUpView {
     var enterButton: some View {
         Button("Make you register") {
+            viewModel.signUp()
         }
         .background(Color.orange)
         .foregroundColor(Color.white)
@@ -102,5 +136,6 @@ extension SignUpView {
 }
 
 #Preview {
-    SignUpView()
+    let viewModel = SignUpViewModel()
+    SignUpView(viewModel: viewModel)
 }
