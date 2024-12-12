@@ -48,7 +48,7 @@ struct SignUpView: View {
                 }
                 .padding(.horizontal, 8)
                 
-                if case SignInUIState.error(let value) = viewModel.uiState {
+                if case SingUpUIState.error(let value) = viewModel.uiState {
                     Text("")
                         .alert(isPresented: .constant(true)) {
                             Alert(
