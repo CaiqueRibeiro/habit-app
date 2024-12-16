@@ -68,7 +68,6 @@ struct SignInView: View {
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .padding(.horizontal, 32)
-                    .background(Color.white)
                     .navigationBarTitle("Login", displayMode: .inline)
                     .navigationBarHidden(navigationHidden) // hides navigation bar in current screen
                 }
@@ -79,15 +78,22 @@ struct SignInView: View {
 
 extension SignInView {
     var emailField: some View {
-        TextField("", text: $email)
-            .border(Color.orange)
+        EditTextView(text: $email,
+                     keyboard: .emailAddress,
+                     placeholder: "E-mail",
+                     error: "Invalid e-mail",
+                     failure: !email.isEmail())
     }
 }
 
 extension SignInView {
     var passwordField: some View {
-        SecureField("", text: $password)
-            .border(Color.orange)
+        EditTextView(text: $password,
+                     keyboard: .emailAddress,
+                     placeholder: "Password",
+                     error: "Password must have 8 characters",
+                     failure: password.count < 8,
+                     isSecure: true)
     }
 }
 
