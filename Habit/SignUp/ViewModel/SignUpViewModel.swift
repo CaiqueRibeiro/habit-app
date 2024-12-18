@@ -25,10 +25,18 @@ class SignUpViewModel: ObservableObject {
     func signUp() {
         self.uiState = .loading
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            self.uiState = .success
-            self.publisher.send(true)
-        }
+        WebService.postUser(fullName: fullName,
+                            email: email,
+                            password: password,
+                            document: document,
+                            phone: phone,
+                            birthday: birthDay,
+                            gender: gender.index)
+        
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+//            self.uiState = .success
+//            self.publisher.send(true)
+//        }
     }
 }
 
