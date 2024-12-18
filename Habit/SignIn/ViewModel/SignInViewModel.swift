@@ -14,6 +14,8 @@ class SignInViewModel: ObservableObject {
     
     private let publisher = PassthroughSubject<Bool, Never>()
     
+    @Published var email: String = ""
+    @Published var password: String = ""
     @Published var uiState: SignInUIState = .none
     
     init() {
@@ -29,7 +31,7 @@ class SignInViewModel: ObservableObject {
     }
     
     
-    func login(email: String, password: String) {
+    func login() {
         self.uiState = .loading
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
@@ -46,7 +48,7 @@ extension SignInViewModel {
     }
     
     func signUpView() -> some View {
-        return SignInViewRouter.makeSignUpView(publisher: publisher)
+        return SignInViewRouter.makeSignUpView(publisher: self.publisher)
     }
 }
 

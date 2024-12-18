@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum SingUpUIState {
+enum SingUpUIState: Equatable {
     case none
     case loading
     case success
